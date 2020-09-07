@@ -64,7 +64,7 @@ public class FacadeExampleTest {
     public void testAFacadeMethod2() {
                     String[] people={"bob","palle"};
                     Movie m2=facade.findMovie(3);
-        Movie m = new Movie(2121, "lez go g2",people);
+        Movie m = new Movie(2121, "lez go g",people);
         assertEquals(m.getTitle(), m2.getTitle(), "Expects the title");
     }
     
