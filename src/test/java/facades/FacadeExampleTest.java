@@ -35,13 +35,14 @@ public class FacadeExampleTest {
     // Setup the DataBase in a known state BEFORE EACH TEST
     //TODO -- Make sure to change the script below to use YOUR OWN entity class
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws InterruptedException {
         EntityManager em = emf.createEntityManager();
         try {
             String[] people={"bob","palle"};
             em.getTransaction().begin();
             em.createNamedQuery("Movie.deleteAllRows").executeUpdate();
             em.persist(new Movie(2121, "lez go g",people));
+            Thread.sleep(1000);
             em.persist(new Movie(2121, "lez go g2", people));
 
             em.getTransaction().commit();
