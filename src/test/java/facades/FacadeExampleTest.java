@@ -1,7 +1,7 @@
 package facades;
 
 import utils.EMF_Creator;
-import entities.RenameMe;
+import entities.Movie;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.AfterAll;
@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 public class FacadeExampleTest {
 
     private static EntityManagerFactory emf;
-    private static FacadeExample facade;
+    private static MovieFarcade facade;
 
     public FacadeExampleTest() {
     }
@@ -24,7 +24,7 @@ public class FacadeExampleTest {
     @BeforeAll
     public static void setUpClass() {
        emf = EMF_Creator.createEntityManagerFactoryForTest();
-       facade = FacadeExample.getFacadeExample(emf);
+       facade =  MovieFarcade.getFacadeExample(emf);
     }
 
     @AfterAll
@@ -38,10 +38,11 @@ public class FacadeExampleTest {
     public void setUp() {
         EntityManager em = emf.createEntityManager();
         try {
+            String[] people={"bob","palle"};
             em.getTransaction().begin();
-            em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
-            em.persist(new RenameMe("Some txt", "More text"));
-            em.persist(new RenameMe("aaa", "bbb"));
+            em.createNamedQuery("Movie.deleteAllRows").executeUpdate();
+            em.persist(new Movie(2121, "lez go g",people));
+            em.persist(new Movie(2121, "lez go g2", people));
 
             em.getTransaction().commit();
         } finally {
@@ -57,7 +58,15 @@ public class FacadeExampleTest {
     // TODO: Delete or change this method 
     @Test
     public void testAFacadeMethod() {
-        assertEquals(2, facade.getRenameMeCount(), "Expects two rows in the database");
+        assertEquals(2, facade.getCount(), "Expects two rows in the database");
     }
+    @Test
+    public void testAFacadeMethod2() {
+                    String[] people={"bob","palle"};
+                    Movie m2=facade.findMovie(3);
+        Movie m = new Movie(2121, "lez go g2",people);
+        assertEquals(m.getTitle(), m2.getTitle(), "Expects the title");
+    }
+    
 
 }
